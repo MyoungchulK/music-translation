@@ -38,18 +38,18 @@ Requirements:
 
 ### Data
 
-1. Download MusicNet dataset from [here](https://homes.cs.washington.edu/~thickstn/musicnet.html) into ```musicnet``` folder.
+1. Download MusicNet dataset from [kaggle](https://www.kaggle.com/datasets/imsparsh/musicnet-dataset) into ```musicnet``` folder.
 2. Extract specific domains from MusicNet dataset: 
    ```
-   python src/parse_musicnet.py -i musicnet -o musicnet/parsed
+   python src/parse_musicnet.py -i /Users/mkim/code/MyoungchulK/project/musicnet/ -o /Users/mkim/code/MyoungchulK/project/data/parsed/ 
    ```
 3. Split into train/test/val 
     ```
-    for d in musicnet/parsed/*/ ; do python src/split_dir.py -i $d -o musicnet/split/$(basename "$d"); done
+    for d in /Users/mkim/code/MyoungchulK/project/data/parsed/*/ ; do python src/split_dir.py -i $d -o /Users/mkim/code/MyoungchulK/project/data/split/$(basename "$d"); done
     ```
 4. Preprocess audio for training
     ```
-    python src/preprocess.py -i musicnet/split -o musicnet/preprocessed
+    python src/preprocess.py -i /Users/mkim/code/MyoungchulK/project/data/split/ -o /Users/mkim/code/MyoungchulK/project/data/preprocessed
     ```
 
 ### Pretrained Models
