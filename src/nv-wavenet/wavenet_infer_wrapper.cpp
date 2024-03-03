@@ -45,14 +45,14 @@ uint64_t construct(int sample_count,
                    int use_embed_tanh,
                    int max_dilation,
                    int implementation) {
-    float* embedding_prev = embed_prev_tensor.data<float>();
-    float* embedding_curr = embed_curr_tensor.data<float>();
-    float* conv_init = conv_init_tensor.data<float>();
-    float* conv_init_bias = conv_init_bias_tensor.data<float>();
-    float* conv_out = conv_out_tensor.data<float>();
-    float* conv_out_bias = conv_out_bias_tensor.data<float>();
-    float* conv_end = conv_end_tensor.data<float>();
-    float* conv_end_bias = conv_end_bias_tensor.data<float>();
+    float* embedding_prev = embed_prev_tensor.data_ptr<float>();
+    float* embedding_curr = embed_curr_tensor.data_ptr<float>();
+    float* conv_init = conv_init_tensor.data_ptr<float>();
+    float* conv_init_bias = conv_init_bias_tensor.data_ptr<float>();
+    float* conv_out = conv_out_tensor.data_ptr<float>();
+    float* conv_out_bias = conv_out_bias_tensor.data_ptr<float>();
+    float* conv_end = conv_end_tensor.data_ptr<float>();
+    float* conv_end_bias = conv_end_bias_tensor.data_ptr<float>();
 
     float** in_layer_weights_prev = (float**) malloc(num_layers*sizeof(float*));
     float** in_layer_weights_curr = (float**) malloc(num_layers*sizeof(float*));
@@ -62,13 +62,13 @@ uint64_t construct(int sample_count,
     float** skip_layer_weights = (float**) malloc(num_layers*sizeof(float*));
     float** skip_layer_biases = (float**) malloc(num_layers*sizeof(float*));
     for (int i=0; i < num_layers; i++) {
-        in_layer_weights_prev[i] = Wprev[i].data<float>();
-        in_layer_weights_curr[i] = Wcur[i].data<float>();
-        in_layer_biases[i] = Bh[i].data<float>();
-        res_layer_weights[i] = Wres[i].data<float>();
-        res_layer_biases[i] = Bres[i].data<float>();
-        skip_layer_weights[i] = Wskip[i].data<float>();
-        skip_layer_biases[i] = Bskip[i].data<float>();
+        in_layer_weights_prev[i] = Wprev[i].data_ptr<float>();
+        in_layer_weights_curr[i] = Wcur[i].data_ptr<float>();
+        in_layer_biases[i] = Bh[i].data_ptr<float>();
+        res_layer_weights[i] = Wres[i].data_ptr<float>();
+        res_layer_biases[i] = Bres[i].data_ptr<float>();
+        skip_layer_weights[i] = Wskip[i].data_ptr<float>();
+        skip_layer_biases[i] = Bskip[i].data_ptr<float>();
     }
 
     void* wavenet = wavenet_construct(sample_count,
@@ -113,16 +113,16 @@ int infer(uint64_t wavenet,
           int sample_count,
           int batch_size) {
     py::gil_scoped_release release;
-    int* samples = samples_tensor.data<int>();
-    float* cond_input = cond_input_tensor.data<float>();
-    float* cond_final = cond_final_tensor.data<float>();
-    float* output_selectors = output_selectors_tensor.data<float>();
+    int* samples = samples_tensor.data_ptr<int>();
+    float* cond_input = cond_input_tensor.data_ptr<float>();
+    float* cond_final = cond_final_tensor.data_ptr<float>();
+    float* output_selectors = output_selectors_tensor.data_ptr<float>();
     wavenet_infer((void*) wavenet, samples, cond_input, cond_final, output_selectors, sample_count, batch_size);
     return 1;
 }
 
 int getZa(uint64_t wavenet, at::Tensor Za_tensor) {
-    float* za_tensor = Za_tensor.data<float>();
+    float* za_tensor = Za_tensor.data_ptr<float>();
     wavenet_getZa((void*) wavenet, za_tensor);
     return 1;
 }

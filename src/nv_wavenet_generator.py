@@ -69,7 +69,7 @@ class NVWavenetGenerator:
                                             fname.parent / "nv-wavenet/matrix.cpp"],
                                    build_directory='.build_dir/' + build_name,
                                    verbose=False,
-                                   extra_cuda_cflags=["-arch=sm_70", "-std=c++14", "--use_fast_math",
+                                   extra_cuda_cflags=["-arch=sm_70", "-std=c++17", "--use_fast_math",
                                                       "-maxrregcount 128", "--ptxas-options=-v",
                                                       "--expt-relaxed-constexpr", "-D__GNUC__=6"])
 
