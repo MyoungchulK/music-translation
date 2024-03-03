@@ -32,6 +32,7 @@
 #include <vector>
 #include <algorithm>
 
+#include "softmax.cuh"
 #include "matrix_math.cuh"
 #include "nv_wavenet_util.cuh"
 #include "nv_wavenet_conversions.cuh"

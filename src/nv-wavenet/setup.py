@@ -6,7 +6,7 @@ import sys
 import os
 
 import torch
-from torch.utils.cpp_extension import CUDAExtension, _join_cuda_home, _is_cuda_file, check_compiler_abi_compatibility
+from torch.utils.cpp_extension import CUDAExtension, _join_cuda_home, _is_cuda_file#, check_compiler_abi_compatibility
 
 IS_WINDOWS = False
 
@@ -184,7 +184,7 @@ class BuildExtensionWithHalf(build_ext, object):
             compiler = os.environ.get('CXX', 'cl')
         else:
             compiler = os.environ.get('CXX', 'c++')
-        check_compiler_abi_compatibility(compiler)
+        #check_compiler_abi_compatibility(compiler)
 
     def _add_compile_flag(self, extension, flag):
         extension.extra_compile_args = copy.copy(extension.extra_compile_args)
@@ -219,8 +219,8 @@ setup(
                           "matrix.cpp",
                       ],
                       extra_compile_args={
-                          "cxx": ["-std=c++14"],
-                          "nvcc": ["-arch=sm_70", "-std=c++14", "--use_fast_math",
+                          "cxx": ["-std=c++17"],
+                          "nvcc": ["-arch=sm_70", "-std=c++17", "--use_fast_math",
                                    "-maxrregcount", "128", "--ptxas-options=-v",
                                    "--expt-relaxed-constexpr", "-D__GNUC__=6"]
                       }
